@@ -31,7 +31,45 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
+  score = 0
+
+  array_mode = dice.max_by {|i| dice.count(i)}
+  mode_count = dice.count(array_mode)
+
+  if mode_count < 3
+    ones_count = dice.count(1)
+    fives_count = dice.count(5)
+    score = ones_count * 100 + fives_count * 50
+    return score
+  else
+    if array_mode == 1
+      score = 1000
+      dice.delete_at(dice.index(1))
+      dice.delete_at(dice.index(1))
+      dice.delete_at(dice.index(1))
+    
+      ones_count = dice.count(1)
+      fives_count = dice.count(5)
+      score = score + ones_count * 100 + fives_count * 50
+      return score
+    else
+      score = array_mode * 100
+      dice.delete_at(dice.index(array_mode))
+      dice.delete_at(dice.index(array_mode))
+      dice.delete_at(dice.index(array_mode))
+
+      ones_count = dice.count(1)
+      fives_count = dice.count(5)
+      score = score + ones_count * 100 + fives_count * 50
+
+      return score
+
+    end
+  end
+
+  return score
 end
+
 
 class AboutScoringProject < Neo::Koan
   def test_score_of_an_empty_list_is_zero
